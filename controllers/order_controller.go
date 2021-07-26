@@ -1,10 +1,11 @@
 package controllers
 
 import (
+	R "KillShopping/response"
+	"KillShopping/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	R "shopping/response"
-	"shopping/services"
+
 )
 
 type OrderControllerImp interface {

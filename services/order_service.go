@@ -1,11 +1,12 @@
 package services
 
 import (
+	"KillShopping/models"
+	"KillShopping/repositories"
+	"KillShopping/utils"
 	"errors"
 	log "github.com/sirupsen/logrus"
-	"shopping/models"
-	"shopping/repositories"
-	"shopping/utils"
+
 	"strconv"
 )
 

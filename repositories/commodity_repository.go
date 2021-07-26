@@ -1,8 +1,8 @@
 package repositories
 
 import (
+	"KillShopping/models"
 	"github.com/jinzhu/gorm"
-	"shopping/models"
 	"time"
 )
 

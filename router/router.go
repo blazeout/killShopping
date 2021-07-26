@@ -1,14 +1,15 @@
 package router
 
 import (
+	"KillShopping/controllers"
+	"KillShopping/middleware"
+	"KillShopping/models"
+	"KillShopping/repositories"
+	"KillShopping/services"
 	"github.com/facebookgo/inject"
 	"github.com/gin-gonic/gin"
 	"log"
-	"shopping/controllers"
-	"shopping/middleware"
-	"shopping/models"
-	"shopping/repositories"
-	"shopping/services"
+
 )
 
 func InitRouter() *gin.Engine {

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"shopping/models"
-	"shopping/router"
-	"shopping/utils"
+	"KillShopping/models"
+	"KillShopping/router"
+	"KillShopping/utils"
 )
 
 func main() {

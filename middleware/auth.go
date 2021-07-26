@@ -1,10 +1,11 @@
 package middleware
 
 import (
+	R "KillShopping/response"
+	"KillShopping/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	R "shopping/response"
-	"shopping/utils"
+
 )
 
 func Auth() gin.HandlerFunc {

@@ -1,6 +1,13 @@
 package main
 
 import (
+	"KillShopping/controllers"
+	"KillShopping/middleware"
+	"KillShopping/models"
+	"KillShopping/repositories"
+	R "KillShopping/response"
+	"KillShopping/services"
+	"KillShopping/utils"
 	"fmt"
 	"github.com/didip/tollbooth"
 	"github.com/didip/tollbooth_gin"
@@ -8,13 +15,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
-	"shopping/controllers"
-	"shopping/middleware"
-	"shopping/models"
-	"shopping/repositories"
-	R "shopping/response"
-	"shopping/services"
-	"shopping/utils"
+
 	"strconv"
 	"sync"
 )

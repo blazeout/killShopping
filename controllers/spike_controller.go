@@ -1,12 +1,13 @@
 package controllers
 
 import (
+	R "KillShopping/response"
+	"KillShopping/services"
+	"KillShopping/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	R "shopping/response"
-	"shopping/services"
-	"shopping/utils"
+
 )
 
 type SpikeController struct {

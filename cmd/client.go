@@ -1,9 +1,9 @@
 package main
 
 import (
-	"shopping/models"
-	"shopping/repositories"
-	"shopping/services"
+	"KillShopping/models"
+	"KillShopping/repositories"
+	"KillShopping/services"
 )
 
 //消息队列客户端用于写入数据库防止暴库
