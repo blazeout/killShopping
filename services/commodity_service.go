@@ -5,8 +5,8 @@ import (
 	"KillShopping/repositories"
 	"KillShopping/utils"
 	"errors"
-	log "github.com/sirupsen/logrus"
 
+	log "github.com/sirupsen/logrus"
 )
 
 type CommodityFormService struct {
@@ -14,7 +14,7 @@ type CommodityFormService struct {
 	Link      string `json:"link" form:"link" binding:"required"`
 	Price     string `json:"price" form:"price" binding:"required"`
 	Stock     int    `json:"stock" form:"stock" binding:"required,numeric"`
-	StartTime int64 `json:"startTime" form:"start_time" binding:"required"`
+	StartTime int64  `json:"startTime" form:"start_time" binding:"required"`
 }
 
 type GetCommodityPageService struct {
@@ -56,7 +56,7 @@ func (s *CommodityService) GetCommodityById(idForm *GetCommodityIdService) (c *m
 	return
 }
 
-func (s *CommodityService) GetCommodityAll() (c []models.Commodity, err error) {
+func (s *CommodityService) GetCommodityAll() (c *[]models.Commodity, err error) {
 	c, err = s.CommodityRepository.GetAll()
 	if err != nil {
 		utils.Log.WithFields(log.Fields{"errMsg": err.Error()}).Warningln("获取数据失败")

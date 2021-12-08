@@ -2,8 +2,9 @@ package repositories
 
 import (
 	"KillShopping/models"
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
 type CommodityRepositoryImp interface {
@@ -12,7 +13,7 @@ type CommodityRepositoryImp interface {
 	//获取商品信息
 	GetById(int) (*models.Commodity, error)
 	//获取全部商品信息
-	GetAll() ([]models.Commodity, error)
+	GetAll() (*[]models.Commodity, error)
 	//获取部分
 	//入参 开始位置 多少个 用于分页
 	GetSize(int, int) (*[]models.Commodity, int, error)
@@ -39,8 +40,8 @@ func (r *CommodityRepository) GetById(id int) (c *models.Commodity, err error) {
 	return
 }
 
-func (r *CommodityRepository) GetAll() (c []models.Commodity, err error) {
-	c = []models.Commodity{}
+func (r *CommodityRepository) GetAll() (c *[]models.Commodity, err error) {
+	c = &[]models.Commodity{}
 	err = r.Db.Find(&c).Error
 	return
 }

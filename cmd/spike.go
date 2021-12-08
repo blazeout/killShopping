@@ -9,12 +9,13 @@ import (
 	"KillShopping/services"
 	"KillShopping/utils"
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/didip/tollbooth"
 	"github.com/didip/tollbooth_gin"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"net/http"
-	"os"
 
 	"strconv"
 	"sync"
@@ -54,7 +55,7 @@ func main() {
 	}
 
 	commodityCache = make(map[int]*models.Commodity)
-	for _, value := range commodityList {
+	for _, value := range *commodityList {
 		commodityCache[int(value.ID)] = &value
 	}
 
@@ -108,7 +109,7 @@ func Ip(Consistent utils.ConsistentHashImp, LocalHost string) gin.HandlerFunc {
 				return
 			} else {
 				//代理处理
-				res, _, _ := utils.GetCurl(fmt.Sprintf("http://%v:%v/%v/spike/%v", ip, port,c.Param("uid"), c.Param("id")), c.GetHeader("Authorization"))
+				res, _, _ := utils.GetCurl(fmt.Sprintf("http://%v:%v/%v/spike/%v", ip, port, c.Param("uid"), c.Param("id")), c.GetHeader("Authorization"))
 				if res.StatusCode == 200 {
 					R.Response(c, http.StatusOK, "成功抢到", nil, http.StatusOK)
 					c.Abort()
