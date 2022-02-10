@@ -7,6 +7,7 @@ import (
 
 var Log *logrus.Logger
 
+// InitLog 日志库
 func InitLog() {
 	Log = logrus.New()
 	Log.Out = os.Stdout

@@ -26,10 +26,10 @@ func (user *JwtUserInfo) GenerateToken() (string, error) {
 		"id":        user.Id,
 		"name":      user.Username,
 		"authority": user.Authority,
-		"nbf":       time.Now().Unix(),
-		"iat":       time.Now().Unix(),
-		"exp":       time.Now().Unix() + 3*60*60,
-		"iss":       "coderth.cn",
+		"nbf":       time.Now().Unix(),           // 生效时间
+		"iat":       time.Now().Unix(),           // 签发时间
+		"exp":       time.Now().Unix() + 3*60*60, // 过期时间
+		"iss":       "coderth.cn",                // issuer 签发链接
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 	tokens, err := token.SignedString([]byte(JwtSecret))
@@ -49,7 +49,7 @@ func (user *JwtUserInfo) ParseToken(tokens string) (err error) {
 	}
 	claim, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		err = errors.New("cannot convert claim to mapclaim")
+		err = errors.New("cannot convert claim to map-claim")
 		return
 	}
 	//验证token，如果token被修改过则为false

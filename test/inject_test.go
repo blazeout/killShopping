@@ -1,14 +1,14 @@
 package test
 
 import (
+	"KillShopping/controllers"
+	"KillShopping/middleware"
+	"KillShopping/models"
+	"KillShopping/repositories"
+	"KillShopping/services"
 	"fmt"
 	"github.com/facebookgo/inject"
 	"github.com/gin-gonic/gin"
-	"shopping/controllers"
-	"shopping/middleware"
-	"shopping/models"
-	"shopping/repositories"
-	"shopping/services"
 	"testing"
 )
 

@@ -11,9 +11,11 @@ import (
 )
 
 //连接信息
-const MQURL = "amqp://guest:guest@127.0.0.1:5672/shopping"
 
-//rabbitMQ结构体
+const MQURL = "amqp://guest:guest@127.0.0.1:5672/"
+
+// rabbitMQ结构体
+
 type RabbitMQ struct {
 	conn    *amqp.Connection
 	channel *amqp.Channel
@@ -34,6 +36,7 @@ func newRabbitMQ(queueName string, exchange string, key string) *RabbitMQ {
 }
 
 //断开channel 和 connection
+
 func (r *RabbitMQ) Destroy() {
 	_ = r.channel.Close()
 	_ = r.conn.Close()
@@ -42,12 +45,14 @@ func (r *RabbitMQ) Destroy() {
 //错误处理函数
 func (r *RabbitMQ) failOnErr(err error, message string) {
 	if err != nil {
+		// 写进日志
 		utils.Log.WithFields(log.Fields{"errMsg": err.Error()}).Warningln(message)
 		panic(fmt.Sprintf("%s:%s", message, err))
 	}
 }
 
 //创建简单模式下RabbitMQ实例
+
 func NewRabbitMQSimple(queueName string) *RabbitMQ {
 	//创建RabbitMQ实例
 	rabbitmq := newRabbitMQ(queueName, "", "")
@@ -61,7 +66,7 @@ func NewRabbitMQSimple(queueName string) *RabbitMQ {
 	return rabbitmq
 }
 
-//直接模式队列生产
+// PublishSimple Simple模式队列生产者
 func (r *RabbitMQ) PublishSimple(message string) error {
 	r.Lock()
 	defer r.Unlock()
@@ -97,7 +102,7 @@ func (r *RabbitMQ) PublishSimple(message string) error {
 	return nil
 }
 
-//simple 模式下消费者
+// ConsumeSimple simple 模式下消费者
 func (r *RabbitMQ) ConsumeSimple(orderService OrderServiceImp, productService CommodityServiceImp) {
 	//1.申请队列，如果队列不存在会自动创建，存在则跳过创建
 	q, err := r.channel.QueueDeclare(

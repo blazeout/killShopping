@@ -5,9 +5,9 @@ import (
 	"KillShopping/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
-
 )
 
+// Admin 检测是否有权限操作
 func Admin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userInfo, exists := c.Get("jwtUserInfo")

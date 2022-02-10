@@ -1,7 +1,7 @@
 package models
 
-//简单的消息体
+// Message 简单的消息体
 type Message struct {
 	CommodityId uint
-	UserID    uint
+	UserID      uint
 }

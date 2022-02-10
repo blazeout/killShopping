@@ -14,7 +14,7 @@ type Res struct {
 
 const (
 	Success = 1
-	File    = 0
+	Fail    = 0
 )
 
 //R.Ok(c, "自定义msg",data)
@@ -24,7 +24,7 @@ func Ok(c *gin.Context, msg string, data interface{}) {
 
 //R.Error(c, "自定义msg",data)
 func Error(c *gin.Context, msg string, data interface{}) {
-	Response(c, File, msg, data, http.StatusOK)
+	Response(c, Fail, msg, data, http.StatusOK)
 }
 
 //R.Response(c,1,"msg",data,200)

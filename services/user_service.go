@@ -5,14 +5,15 @@ import (
 	"KillShopping/repositories"
 	"KillShopping/utils"
 	"errors"
-
 )
 
+// UserLoginService 用户登录结构体
 type UserLoginService struct {
 	Email    string `form:"email" json:"email" binding:"required,min=5,max=30"`
 	Password string `form:"password" json:"password" binding:"required,min=8,max=40"`
 }
 
+// UserRegisterService 用户注册结构体 包含需要的信息
 type UserRegisterService struct {
 	Email    string `json:"email" form:"email" binding:"required,email"`
 	Tel      string `json:"tel" form:"tel" binding:"required,len=11"`

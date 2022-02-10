@@ -17,7 +17,7 @@ type Page struct {
 	List interface{}
 }
 
-//总条数  当前页码  每页大小   数据list
+// PageUtil 总条数  当前页码  每页大小   数据list
 func PageUtil(count int, pageNo int, pageSize int, list interface{}) Page {
 	tp := count / pageSize
 	if count%pageSize > 0 {

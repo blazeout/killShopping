@@ -6,7 +6,6 @@ import (
 	"KillShopping/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
-
 )
 
 type UserController struct {
@@ -38,6 +37,8 @@ func (l *UserController) Login(c *gin.Context) {
 	}
 }
 
+// Register registerService是一个结构体, 调用shouldBind, 将请求中的数据绑定在此结构体上, 然后拿着这个有数据的结构体
+// 去真正的Register方法中实现添加用户并且注册
 func (l *UserController) Register(c *gin.Context) {
 	var registerService services.UserRegisterService
 	if err := c.ShouldBind(&registerService); err == nil {

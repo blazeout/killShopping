@@ -7,12 +7,14 @@ import (
 	"log"
 )
 
+// MysqlHandler 全局的 *gorm.DB
 var (
 	MysqlHandler *gorm.DB
 )
 
 func mysqlBuild() *gorm.DB {
 	var err error
+	// 格式 账户名 : 密码@链接方式(地址和端口号)/表名
 	DB, err := gorm.Open(
 		"mysql",
 		fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",

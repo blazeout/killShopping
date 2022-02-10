@@ -19,6 +19,8 @@ func (u *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
+// SetPassword 调用生成Password, bcrypt会生成一个 hash码, 然后将哈希码存入数据库User的Password中
+// 后续拿着这个hash码和新传入进来的比较即可
 func (u *User) SetPassword(password string) error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
 	if err != nil {

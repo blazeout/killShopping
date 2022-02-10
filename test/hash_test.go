@@ -1,10 +1,10 @@
 package test
 
 import (
+	"KillShopping/utils"
 	"fmt"
 	"log"
 	"math/rand"
-	"shopping/utils"
 	"testing"
 	"time"
 )

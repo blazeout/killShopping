@@ -39,11 +39,13 @@ type OrderService struct {
 }
 
 func (s *OrderService) Add(m *MessageService) (err error) {
+	// 雪花算法用来生成全局按照时间递增的唯一的Order ID
 	node, err := utils.NewWorker(int64(m.UserID))
 	if err != nil {
 		utils.Log.WithFields(log.Fields{"errMsg": err.Error()}).Warningln("创建订单失败")
 		return
 	}
+	// node全局唯一id,
 	orderId := strconv.FormatInt(node.GetId(), 10)
 	orderInfo := models.Order{
 		UserId:      m.UserID,

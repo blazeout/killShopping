@@ -9,7 +9,6 @@ import (
 	"github.com/facebookgo/inject"
 	"github.com/gin-gonic/gin"
 	"log"
-
 )
 
 func InitRouter() *gin.Engine {
@@ -17,7 +16,7 @@ func InitRouter() *gin.Engine {
 	var commodityController controllers.CommodityController
 	var orderController controllers.OrderController
 
-	//依赖注入
+	// 依赖注入
 	var injector inject.Graph
 	err := injector.Provide(
 		&inject.Object{Value: &repositories.UserManagerRepository{Db: models.MysqlHandler}},
@@ -43,11 +42,13 @@ func InitRouter() *gin.Engine {
 	app := gin.Default()
 	api := app.Group("/api")
 	{
+		// login界面就会生成jwtToken, 来以备后续使用
 		api.POST("/login", userController.Login)
 		api.POST("/register", userController.Register)
+		// 这个根据邮箱获取用户的个人信息， 相当于展示个人信息的页面
 		api.GET("/me", middleware.Auth(), userController.Info)
-
-		api.POST("/commodity", middleware.Auth(), middleware.Admin(), commodityController.AddCommodity)
+		// 下面的加了一个 middleware.Admin() 是检测是否有购买的权限 authority
+		api.POST("/", middleware.Auth(), middleware.Admin(), commodityController.AddCommodity)
 		api.DELETE("/commodity/:id", middleware.Auth(), middleware.Admin(), commodityController.DelCommodity)
 		api.GET("/commodity/:id", middleware.Auth(), middleware.Admin(), commodityController.GetCommodityById)
 		api.GET("/commodity", middleware.Auth(), middleware.Admin(), commodityController.GetCommodity)

@@ -8,20 +8,20 @@ import (
 )
 
 type CommodityRepositoryImp interface {
-	//添加商品
+	// Add 添加商品
 	Add(*models.Commodity) error
-	//获取商品信息
+	// GetById 获取商品信息
 	GetById(int) (*models.Commodity, error)
-	//获取全部商品信息
+	// GetAll 获取全部商品信息
 	GetAll() (*[]models.Commodity, error)
-	//获取部分
+	// GetSize 获取部分
 	//入参 开始位置 多少个 用于分页
 	GetSize(int, int) (*[]models.Commodity, int, error)
-	//删除商品
+	// Del 删除商品
 	Del(int) error
-	//更新商品
+	// Update 更新商品
 	Update(int, *models.Commodity) error
-	//商品库存减去1
+	// UpdateStockMinusOne 商品库存减去1
 	UpdateStockMinusOne(int) error
 }
 
@@ -36,7 +36,7 @@ func (r *CommodityRepository) Add(c *models.Commodity) (err error) {
 
 func (r *CommodityRepository) GetById(id int) (c *models.Commodity, err error) {
 	c = &models.Commodity{}
-	err = r.Db.Where("id=?", id).Find(c).Error
+	err = r.Db.Where("id=?", id).Find(&c).Error
 	return
 }
 

@@ -60,13 +60,16 @@ func main() {
 	}
 
 	app := gin.Default()
+	// 这个是获取本地的ip地址
 	ip, err := utils.GetIp()
 	if err != nil {
 		utils.Log.WithFields(log.Fields{"errMsg": err.Error()}).Panic("ip获取失败")
 		os.Exit(1)
 		return
 	}
-	//ip = "127.0.0.3"
+	// ip = "127.0.0.3"
+	// 生产者
+
 	simple := services.NewRabbitMQSimple("product")
 	spikeService := &services.SpikeService{
 		CommodityCache:   &commodityCache,
@@ -74,8 +77,9 @@ func main() {
 	}
 
 	spikeController := &controllers.SpikeController{SpikeService: spikeService} //, middleware.Auth()
-
+	// 一秒最多允许1个请求, 最大并发量无限制
 	limiter := tollbooth.NewLimiter(1, nil)
+	// uid是userId, id为商品id
 	app.GET("/:uid/spike/:id", tollbooth_gin.LimitHandler(limiter), Ip(consistent, ip), middleware.Auth(), spikeController.Shopping)
 
 	app.GET("/", tollbooth_gin.LimitHandler(limiter), func(context *gin.Context) {
@@ -90,6 +94,7 @@ func Ip(Consistent utils.ConsistentHashImp, LocalHost string) gin.HandlerFunc {
 		if err := c.ShouldBindUri(&spikeServiceUri); err == nil {
 			c.Set("spikeServiceUri", spikeServiceUri)
 			id := strconv.Itoa(spikeServiceUri.UId)
+			// 这个是根据商品id去哈希环里面找, 找到这个商品顺时针距离最近的服务器节点ip地址返回
 			ip, err := Consistent.Get(id)
 			if err != nil {
 				utils.Log.WithFields(log.Fields{"errMsg": err.Error()}).Warningln("hash环获取数据错误")
@@ -99,11 +104,12 @@ func Ip(Consistent utils.ConsistentHashImp, LocalHost string) gin.HandlerFunc {
 			}
 			mutex.Lock()
 			defer mutex.Unlock()
-			if commodityCache[spikeServiceUri.Id].Stock < 0 {
+			if commodityCache[spikeServiceUri.Id].Stock <= 0 {
 				R.Response(c, http.StatusCreated, "商品已经卖完", nil, http.StatusCreated)
 				c.Abort()
 				return
 			}
+			// 如果相等就说明访问的是当前节点，就直接去数据层找数据，如果不是那么就走转发流程，去找目标ip节点
 			if ip == LocalHost {
 				c.Next()
 				return

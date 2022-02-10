@@ -32,11 +32,11 @@ type ConsistentHashImp interface {
 	Get(string) (string, error)
 }
 
-//创建结构体保存一致性hash信息
+// ConsistentHash 创建结构体保存一致性hash信息
 type ConsistentHash struct {
 	//hash环，key为哈希值，值存放节点的信息
 	circle map[uint32]string
-	//已经排序的节点hash切片
+	//已经排序的节点hash切片, 存储着各个节点的key
 	sortedHashes units
 	//虚拟节点个数，用来增加hash的平衡性
 	VirtualNode int
@@ -44,7 +44,7 @@ type ConsistentHash struct {
 	sync.RWMutex
 }
 
-//创建一致性hash算法结构体，设置默认节点数量
+// NewConsistent 创建一致性hash算法结构体，设置默认节点数量
 func NewConsistent(nodeNum int) ConsistentHashImp {
 	return &ConsistentHash{
 		//初始化变量
@@ -82,7 +82,7 @@ func (c *ConsistentHash) updateSortedHashes() {
 		hashes = nil
 	}
 
-	//添加hashes
+	//添加hashes, k是key, 存储着
 	for k := range c.circle {
 		hashes = append(hashes, k)
 	}
@@ -144,7 +144,7 @@ func (c *ConsistentHash) search(key uint32) int {
 	return i
 }
 
-//根据数据标示获取最近的服务器节点信息
+// Get 根据数据标示获取最近的服务器节点信息, 顺时针查找遇到的第一个服务器节点
 func (c *ConsistentHash) Get(name string) (string, error) {
 	//添加锁
 	c.RLock()

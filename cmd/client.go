@@ -6,7 +6,7 @@ import (
 	"KillShopping/services"
 )
 
-//消息队列客户端用于写入数据库防止暴库
+// 消息队列客户端用于写入数据库防止暴库
 
 func main() {
 	models.Init()
