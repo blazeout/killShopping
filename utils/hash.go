@@ -1,4 +1,4 @@
-package utils
+package main
 
 import (
 	"errors"
@@ -54,7 +54,7 @@ func NewConsistent(nodeNum int) ConsistentHashImp {
 	}
 }
 
-//自动生成key值
+//自动生成key值 key由element+index组成
 func (c *ConsistentHash) generateKey(element string, index int) string {
 	//副本key生成逻辑
 	return element + strconv.Itoa(index)
@@ -94,7 +94,7 @@ func (c *ConsistentHash) updateSortedHashes() {
 	c.sortedHashes = hashes
 }
 
-//向hash环中添加节点
+// Add 向hash环中添加节点
 func (c *ConsistentHash) Add(element string) {
 	//加锁
 	c.Lock()
@@ -122,7 +122,7 @@ func (c *ConsistentHash) remove(element string) {
 	c.updateSortedHashes()
 }
 
-//删除一个节点
+// Remove 删除一个节点
 func (c *ConsistentHash) Remove(element string) {
 	c.Lock()
 	defer c.Unlock()

@@ -1,4 +1,4 @@
-package utils
+package main
 
 type Page struct {
 	//当前页码

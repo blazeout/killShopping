@@ -1,6 +1,8 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+)
 
 // Commodity 商品
 // Name 属性 Link 链接属性 Price 价格属性 Stock 剩余库存属性 StartTime 开始售卖时间属性
